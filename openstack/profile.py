@@ -107,6 +107,7 @@ class Profile(object):
         self._add_service(
             orchestration_service.OrchestrationService(version="v1"))
         self._add_service(workflow_service.WorkflowService(version="v2"))
+        self._add_service(workflow_service.WorkflowService(version="v1"))
 
         self.service_keys = sorted(self._services.keys())
 
