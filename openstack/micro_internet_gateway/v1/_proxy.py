@@ -12,100 +12,122 @@
 
 from openstack import proxy
 
+from openstack.micro_internet_gateway.v1 import cell as _cell
+from openstack.micro_internet_gateway.v1 import configuration as _config
 from openstack.micro_internet_gateway.v1 \
-    import micro_internet_gateway as _micro_internet_gateway
-from openstack.micro_internet_gateway.v1 \
-    import micro_internet_gateway_plan as _micro_internet_gateway_plan
-from openstack.micro_internet_gateway.v1 import operation as _operation
+    import firewall_policy_types as _firewall_policy_types
+from openstack.micro_internet_gateway.v1 import size as _size
+from openstack.micro_internet_gateway.v1 import region as _region
 
 
 class Proxy(proxy.Proxy):
 
-    def micro_internet_gateway_plans(self, **params):
-        """List micro internet gateway plans.
+    def regions(self, **params):
+        """List regions
 
-        :param params: The parameters as query string format
-            to get network appliance plans.
-        :returns: A list of network appliance plans.
-        :rtype: list of :class:`~ecl.micro_internet_gateway.v1.
-            micro_internet_gateway_plan.MicroInternetGatewayPlan`
+        :param params: The parameters as query string format to get region.
+        :returns: A list of regions.
+        :rtype: list of
+            :class:`~openstack.micro_internet_gateway.v1.region.Region`
         """
-        return list(self._list(
-            _micro_internet_gateway_plan.MicroInternetGatewayPlan,
-            paginated=False, **params))
+        return list(self._list(_region.Region, paginated=False, **params))
 
-    def get_micro_internet_gateway_plan(
-            self, micro_internet_gateway_plan_id):
-        """Show micro internet gateway plan.
+    def sizes(self, **params):
+        """List sizes
 
-        :param string micro_internet_gateway_plan_id:
-            ID of specified micro internet gateway plan.
-        :return: :class:`~ecl.micro_internet_gateway.v1.
-            micro_internet_gateway_plan.MicroInternetGatewayPlan`
+        :param params: The parameters as query string format to get size.
+        :returns: A list of sizes.
+        :rtype: list of
+            :class:`~openstack.micro_internet_gateway.v1.size.Size`
         """
-        return self._get(
-            _micro_internet_gateway_plan.MicroInternetGatewayPlan,
-            micro_internet_gateway_plan_id)
+        return list(self._list(_size.Size, paginated=False, **params))
 
-    def micro_internet_gateways(self, **params):
-        """List micro internet gateways.
+    def firewall_policy_types(self, **params):
+        """List firewall policy types
 
-        :param params: The parameters as query string format
-            to get list of network appliance.
-        :returns: A list of network appliance.
-        :rtype: list of :class:`~ecl.micro_internet_gateway.v1.
-            micro_internet_gateway.MicroInternetGateway`
+        :param params: 
+            The parameters as query string format 
+            to get firewall policy types.
+        :returns: A list of firewall policy types.
+        :rtype: list of
+            :class:`~openstack.micro_internet_gateway.v1.size.Size`
         """
-        return list(self._list(
-            _micro_internet_gateway.MicroInternetGateway,
-            paginated=False, **params))
+        return list(self._list(_firewall_policy_types.FirewallPoicyTypes,
+                    paginated=False, **params))
 
-    def get_micro_internet_gateway(self, micro_internet_gateway_id):
-        """Show micro internet gateway.
+    def get_size(self, size):
+        """Show size.
 
-        :param string micro_internet_gateway_id:
-            ID of specified micro internet gateway.
-        :return: :class:`~ecl.micro_internet_gateway.v1.
-            micro_internet_gateway.MicroInternetGateway`
+        :param size: The value can be the ID of a size or a
+                     :class:`~openstack.micro_internet_gateway.v1.size.Size`
+        :return: :class:`~openstack.micro_internet_gateway.v1.size.Size`
         """
-        return self._get(_micro_internet_gateway.MicroInternetGateway,
-                         micro_internet_gateway_id)
+        return self._get(_size.Size, size)
 
-    def update_micro_internet_gateway(self, micro_internet_gateway,
-                                      **body):
-        """Update a micro internet gateway.
+    def find_size(self, name_or_id, ignore_missing=False):
+        """Find a size.
 
-        :param micro_internet_gateway:
-            ID of specified micro internet gateway.
-        :param :attrs \*\*params: Parameters for updating
-            specified micro internet gateway.
-        :returns: :class:`~ecl.micro_internet_gateway.
-            v1.micro_internet_gateway.MicroInternetGateway`
-        """
-        return self._update(_micro_internet_gateway.MicroInternetGateway,
-                            micro_internet_gateway, **body)
-
-    def find_micro_internet_gateway(self, name_or_id, ignore_missing=False):
-        """Find a single micro internet gateway.
-
-        :param name_or_id: The name or ID of a micro internet gateway.
+        :param name_or_id: The name or ID of a size.
         :param bool ignore_missing: When set to ``False``
             :class:`~ecl.exceptions.ResourceNotFound` will be
             raised when the resource does not exist.
             When set to ``True``, None will be returned when
             attempting to find a nonexistent resource.
-        :returns: One :class:`~ecl.micro_internet_gateway.v1.
-            micro_internet_gateway.MicroInternetGateway` or None
+        :returns: One :class:`~openstack.micro_internet_gateway.v1.
+            cell_plan.Size`
+            or None
         """
-        return self._find(_micro_internet_gateway.MicroInternetGateway,
-                          name_or_id,
+        return self._find(_size.Size, name_or_id,
                           ignore_missing=ignore_missing)
 
-    def delete_micro_internet_gateway(self, micro_internet_gateway_id,
-                                      ignore_missing=False):
-        """Delete micro internet gateway.
+    def cells(self, **params):
+        """List cells.
 
-        :param micro_internet_gateway_id:
+        :param params: The parameters as query string format
+            to get list of cells.
+        :returns: A list of cells.
+        :rtype: list of :class:`~openstack.micro_internet_gateway.v1.
+            cell.Cell`
+        """
+        return list(self._list(_cell.Cell, paginated=False, **params))
+
+    def get_cell(self, cell):
+        """Show cell.
+
+        :param size: The value can be the ID of a cell or a
+                     :class:`~openstack.micro_internet_gateway.v1.cell.Cell`
+        :return: :class:`~openstack.micro_internet_gateway.v1.cell.Cell`
+        """
+        return self._get(_cell.Cell, cell)
+
+    # def update_cell(self, cell, **body):
+    #     """Update a cell.
+
+    #     :param cell: ID of specified cell.
+    #     :param :attrs \*\*params: Parameters for updating specified cell.
+    #     :returns: :class:`~ecl.cell.v1.cell.Cell`
+    #     """
+    #     return self._update(_cell.Cell, cell, **body)
+
+    def find_cell(self, name_or_id, ignore_missing=False):
+        """Find a single cell.
+
+        :param name_or_id: The name or ID of a cell.
+        :param bool ignore_missing: When set to ``False``
+            :class:`~ecl.exceptions.ResourceNotFound` will be
+            raised when the resource does not exist.
+            When set to ``True``, None will be returned when
+            attempting to find a nonexistent resource.
+        :returns: One :class:`~openstack.micro_internet_gateway.v1.
+            cell.Cell` or None
+        """
+        return self._find(_cell.Cell, name_or_id,
+                          ignore_missing=ignore_missing)
+
+    def delete_cell(self, cell_id, ignore_missing=False):
+        """Delete cell.
+
+        :param cell_id:
             The ID of a micro internet gateway.
         :param bool ignore_missing: When set to ``False``
             :class:`~ecl.exceptions.ResourceNotFound` will be
@@ -114,103 +136,111 @@ class Proxy(proxy.Proxy):
             attempting to delete a nonexistent port.
         :returns: ``None``
         """
-        self._delete(_micro_internet_gateway.MicroInternetGateway,
-                     micro_internet_gateway_id,
-                     ignore_missing=ignore_missing)
+        self._delete(_cell.Cell, cell_id, ignore_missing=ignore_missing)
 
-    def create_micro_internet_gateway(
-            self,
-            micro_internet_gateway_plan_id,
-            interfaces,
-            name=None,
-            description=None,
-            # default_gateway=None,
-            availability_zone=None):
-        """Create micro internet gateway.
+    def create_cell(self,
+                    name,
+                    size_id,
+                    firewall_policy_type_id,
+                    n_number,
+                    v_number,
+                    vthunder_connectivity_cidr,
+                    description=None,
+                    region_id=None,
+                    alert_email=None):
+        """Create Cell.
 
-        :param string micro_internet_gateway_plan_id:
-            Plan ID for micro internet gateway.
-        :param dict interfaces: Interface definition dictionary.
-        :param string name: Name of micro internet gateway.
-        :param string description: Description of micro internet gateway.
-        :param string availability_zone: Availability Zone
-            for micro internet gateway.
-        :returns: :class:`~ecl.micro_internet_gateway.v1.
-            micro_internet_gateway.MicroInternetGateway`
+        :param string name: Name for cell.
+        :param string size: Size for cell.
+        :param string firewall_policy_type_id: Firewall policy type for cell.
+        :param string n_number: UNO contract N Number.
+        :param string n_number: UNO contract V Number.
+        :param string vthunder_connectivity_cidr: 
+            CIDR for VPN connection segments.
+        :param string description: Description for cell.
+        :param string region: Region for cell.
+        :param string alert_email: Alert e-mail address for cell.
+        :returns: :class:`~openstack.micro_internet_gateway.v1.cell.Cell`
         """
         body = {}
-        body["micro_internet_gateway_plan_id"] = \
-            micro_internet_gateway_plan_id
-        body["interfaces"] = interfaces
-        if name:
-            body["name"] = name
+
+        # required params
+        body["name"] = name
+        body["size_id"] = size_id
+        body["firewall_policy_type_id"] = firewall_policy_type_id
+        body["n_number"] = n_number
+        body["v_number"] = v_number
+        body["vthunder_connectivity_cidr"] = vthunder_connectivity_cidr
+
         if description:
             body["description"] = description
-        # if default_gateway:
-        #     body["default_gateway"] = default_gateway
-        if availability_zone:
-            body["availability_zone"] = availability_zone
-        return self._create(_micro_internet_gateway.MicroInternetGateway,
-                            **body)
+        if region_id:
+            body["region_id"] = region_id
+        if alert_email:
+            body["alert_email"] = alert_email
 
-    def start_micro_internet_gateway(self, micro_internet_gateway):
-        """Start the micro internet gateway.
+        return self._create(_cell.Cell, **body)
 
-        :param micro_internet_gateway:
-            The ID of a micro internet gateway.
-        :return: <Response 200>
+    def configurations(self, **params):
+        """Show configuration.
+
+        :param cell: The value can be the ID of a size or a
+                     :class:`~openstack.micro_internet_gateway.v1.cell.Cell`
+        :param params:
+            The parameters as query string format to get configuration.
+        :return:
+            :class:`~openstack.micro_internet_gateway.v1._config.Configuration`
         """
-        micro_internet_gateway = \
-            self.get_micro_internet_gateway(micro_internet_gateway)
-        return micro_internet_gateway.start(self.session)
+        return list(self._list(_config.Configuration,
+                               paginated=False, **params))[0]
 
-    def get_micro_internet_gateway_console(self,
-                                           micro_internet_gateway,
-                                           vnc_type):
-        """Get console information for the micro internet gateway.
-
-        :param micro_internet_gateway: Either the ID of a server or a
-            :class:`~ecl.micro_internet_gateway.v1.
-            micro_internet_gateway.MicroInternetGateway` instance.
-        :param vnc_type: should be `~string "novnc"`
-        :return: <Response 200>
-        """
-        micro_internet_gateway = \
-            self.get_micro_internet_gateway(micro_internet_gateway)
-        return micro_internet_gateway.get_console(self.session, vnc_type)
-
-    def stop_micro_internet_gateway(self, micro_internet_gateway):
-        """Stop the micro internet gateway.
-
-        :param micro_internet_gateway:
-            The ID of a micro internet gateway.
-        :return: <Response 200>
-        """
-        micro_internet_gateway = \
-            self.get_micro_internet_gateway(micro_internet_gateway)
-        return micro_internet_gateway.stop(self.session)
-
-    def restart_micro_internet_gateway(self, micro_internet_gateway):
-        """Restart the micro internet gateway.
-
-        :param micro_internet_gateway:
-            The ID of a micro internet gateway.
-        :return: <Response 200>
-        """
-        micro_internet_gateway = \
-            self.get_micro_internet_gateway(micro_internet_gateway)
-        return micro_internet_gateway.restart(self.session)
-
-    def reset_password_micro_internet_gateway(self, micro_internet_gateway):
-        """Reset the password of micro internet gateway.
-
-        :param micro_internet_gateway:
-            The ID of a micro internet gateway.
-        :return: <Response 200>
-        """
-        micro_internet_gateway = \
-            self.get_micro_internet_gateway(micro_internet_gateway)
-        return micro_internet_gateway.reset_password(self.session)
+    # def get_cell_console(self,
+    #                                        cell,
+    #                                        vnc_type):
+    #     """Get console information for the micro internet gateway.
+    #
+    #     :param cell: Either the ID of a server or a
+    #         :class:`~openstack.micro_internet_gateway.v1.
+    #         cell.MicroInternetGateway` instance.
+    #     :param vnc_type: should be `~string "novnc"`
+    #     :return: <Response 200>
+    #     """
+    #     cell = \
+    #         self.get_cell(cell)
+    #     return cell.get_console(self.session, vnc_type)
+    #
+    # def stop_cell(self, cell):
+    #     """Stop the micro internet gateway.
+    #
+    #     :param cell:
+    #         The ID of a micro internet gateway.
+    #     :return: <Response 200>
+    #     """
+    #     cell = \
+    #         self.get_cell(cell)
+    #     return cell.stop(self.session)
+    #
+    # def restart_cell(self, cell):
+    #     """Restart the micro internet gateway.
+    #
+    #     :param cell:
+    #         The ID of a micro internet gateway.
+    #     :return: <Response 200>
+    #     """
+    #     cell = \
+    #         self.get_cell(cell)
+    #     return cell.restart(self.session)
+    #
+    # def reset_password_cell(self, cell):
+    #     """Reset the password of micro internet gateway.
+    #
+    #     :param cell:
+    #         The ID of a micro internet gateway.
+    #     :return: <Response 200>
+    #     """
+    #     cell = \
+    #         self.get_cell(cell)
+    #     return cell.reset_password(self.session)
 
     def operations(self, **params):
         """List operations.
@@ -219,7 +249,7 @@ class Proxy(proxy.Proxy):
                                   the resources being returned.
 
         :returns: A list of operation objects
-        :rtype: list of :class:`~ecl.micro_internet_gateway.v1.
+        :rtype: list of :class:`~openstack.micro_internet_gateway.v1.
             operation.Operation`
         """
         return list(self._list(_operation.Operation,
@@ -230,26 +260,8 @@ class Proxy(proxy.Proxy):
         """Show operation.
 
         :param string operation_id: ID of specified operation.
-        :return: :class:`~ecl.micro_internet_gateway.v1.
+        :return: :class:`~openstack.micro_internet_gateway.v1.
             operation.Operation`
         """
         return self._get(_operation.Operation, operation_id)
 
-    def find_micro_internet_gateway_plan(self, name_or_id,
-                                         ignore_missing=False):
-        """Find a single micro internet gateway plan.
-
-        :param name_or_id: The name or ID of a micro internet gateway plan.
-        :param bool ignore_missing: When set to ``False``
-            :class:`~ecl.exceptions.ResourceNotFound` will be
-            raised when the resource does not exist.
-            When set to ``True``, None will be returned when
-            attempting to find a nonexistent resource.
-        :returns: One :class:`~ecl.micro_internet_gateway.v1.
-            micro_internet_gateway_plan.MicroInternetGatewayPlan`
-            or None
-        """
-        return self._find(
-            _micro_internet_gateway_plan.MicroInternetGatewayPlan,
-            name_or_id,
-            ignore_missing=ignore_missing)
