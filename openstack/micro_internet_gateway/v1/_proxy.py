@@ -144,6 +144,7 @@ class Proxy(proxy.Proxy):
                     firewall_policy_type_id,
                     n_number,
                     v_number,
+                    api_key,
                     vthunder_connectivity_cidr,
                     description=None,
                     region_id=None,
@@ -154,8 +155,9 @@ class Proxy(proxy.Proxy):
         :param string size: Size for cell.
         :param string firewall_policy_type_id: Firewall policy type for cell.
         :param string n_number: UNO contract N Number.
-        :param string n_number: UNO contract V Number.
-        :param string vthunder_connectivity_cidr: 
+        :param string v_number: UNO contract V Number.
+        :param string api_key: API key.
+        :param string vthunder_connectivity_cidr:
             CIDR for VPN connection segments.
         :param string description: Description for cell.
         :param string region: Region for cell.
@@ -170,6 +172,7 @@ class Proxy(proxy.Proxy):
         body["firewall_policy_type_id"] = firewall_policy_type_id
         body["n_number"] = n_number
         body["v_number"] = v_number
+        body["api_key"] = api_key
         body["vthunder_connectivity_cidr"] = vthunder_connectivity_cidr
 
         if description:
@@ -194,6 +197,15 @@ class Proxy(proxy.Proxy):
         return list(self._list(_config.Configuration,
                                paginated=False, **params))[0]
 
+    def activate_cell(self, cell):
+        """Activate specified cell.
+
+        :param cell: The ID of Cell.
+        :return: <Response 200>
+        """
+        cell = self.get_cell(cell)
+        return cell.activate(self.session)
+
     # def get_cell_console(self,
     #                                        cell,
     #                                        vnc_type):
@@ -208,19 +220,7 @@ class Proxy(proxy.Proxy):
     #     cell = \
     #         self.get_cell(cell)
     #     return cell.get_console(self.session, vnc_type)
-    #
-    # def stop_cell(self, cell):
-    #     """Stop the micro internet gateway.
-    #
-    #     :param cell:
-    #         The ID of a micro internet gateway.
-    #     :return: <Response 200>
-    #     """
-    #     cell = \
-    #         self.get_cell(cell)
-    #     return cell.stop(self.session)
-    #
-    # def restart_cell(self, cell):
+    #    # def restart_cell(self, cell):
     #     """Restart the micro internet gateway.
     #
     #     :param cell:
@@ -242,26 +242,26 @@ class Proxy(proxy.Proxy):
     #         self.get_cell(cell)
     #     return cell.reset_password(self.session)
 
-    def operations(self, **params):
-        """List operations.
+    # def operations(self, **params):
+    #     """List operations.
 
-        :param kwargs \*\*params: Optional query parameters to be sent to limit
-                                  the resources being returned.
+    #     :param kwargs \*\*params: Optional query parameters to be sent to limit
+    #                               the resources being returned.
 
-        :returns: A list of operation objects
-        :rtype: list of :class:`~openstack.micro_internet_gateway.v1.
-            operation.Operation`
-        """
-        return list(self._list(_operation.Operation,
-                               paginated=False, **params))
+    #     :returns: A list of operation objects
+    #     :rtype: list of :class:`~openstack.micro_internet_gateway.v1.
+    #         operation.Operation`
+    #     """
+    #     return list(self._list(_operation.Operation,
+    #                            paginated=False, **params))
 
-    def get_operation(
-            self, operation_id):
-        """Show operation.
+    # def get_operation(
+    #         self, operation_id):
+    #     """Show operation.
 
-        :param string operation_id: ID of specified operation.
-        :return: :class:`~openstack.micro_internet_gateway.v1.
-            operation.Operation`
-        """
-        return self._get(_operation.Operation, operation_id)
+    #     :param string operation_id: ID of specified operation.
+    #     :return: :class:`~openstack.micro_internet_gateway.v1.
+    #         operation.Operation`
+    #     """
+    #     return self._get(_operation.Operation, operation_id)
 

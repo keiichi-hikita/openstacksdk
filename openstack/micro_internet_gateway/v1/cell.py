@@ -15,8 +15,9 @@
 import base
 
 from openstack import resource
-from openstack.micro_internet_gateway import micro_internet_gateway_service
 from openstack import utils
+
+from openstack.micro_internet_gateway import micro_internet_gateway_service
 
 
 class Cell(base.MicroInternetGatewayBaseResource):
@@ -68,6 +69,8 @@ class Cell(base.MicroInternetGatewayBaseResource):
     n_number = resource.Body('n_number')
     #: VPN V Number of cell
     v_number = resource.Body('v_number')
+    #: APi Key of cell
+    api_key = resource.Body('api_key')
     #: vThunder connectivity address
     vthunder_connectivity_cidr = resource.Body('vthunder_connectivity_cidr')
     #: Date / Time when resource was created.
@@ -92,23 +95,23 @@ class Cell(base.MicroInternetGatewayBaseResource):
     #     return self._configurations(session, 'gslb')
     #
 
-    # def _action(self, session, body, postfix='action'):
-    #     """Preform virtual network appliance actions given the message body"""
-    #     url = utils.urljoin(Cell.base_path,
-    #                         self.id, postfix)
-    #     headers = {'Accept': ''}
-    #     return session.post(
-    #         url, endpoint_filter=self.service, json=body, headers=headers)
-    #
+    def _action(self, session, body, postfix='action'):
+        """Preform cell actions given the message body"""
+        url = utils.urljoin(Cell.base_path, self.id, postfix)
+        headers = {'Accept': ''}
+        return session.post(
+            url, endpoint_filter=self.service, json=body, headers=headers)
+
+    def activate(self, session):
+        """Activate cell"""
+        body = {"os-activate": None}
+        return self._action(session, body)
+
     # def start(self, session):
     #     """Start virtual network appliance"""
     #     body = {"os-start": None}
     #     return self._action(session, body)
     #
-    # def stop(self, session):
-    #     """Stop virtual network appliance"""
-    #     body = {"os-stop": None}
-    #     return self._action(session, body)
     #
     # def restart(self, session):
     #     """Restart virtual network appliance"""
