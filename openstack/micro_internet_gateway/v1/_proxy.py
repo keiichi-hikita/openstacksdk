@@ -15,12 +15,40 @@ from openstack import proxy
 from openstack.micro_internet_gateway.v1 import cell as _cell
 from openstack.micro_internet_gateway.v1 import configuration as _config
 from openstack.micro_internet_gateway.v1 \
-    import firewall_policy_types as _firewall_policy_types
+    import firewall_policy_types as _firewall_policy_type
+from openstack.micro_internet_gateway.v1 \
+    import firewall_configuration as _firewall_configuration
 from openstack.micro_internet_gateway.v1 import size as _size
 from openstack.micro_internet_gateway.v1 import region as _region
 
 
 class Proxy(proxy.Proxy):
+
+    def firewall_configurations(self, **params):
+        """List firewall configurations
+
+        :param params: 
+            The parameters as query string format 
+            to get firewall configurations.
+        :returns: A list of firewall configurations.
+        :rtype: list of
+            :class:`~openstack.micro_internet_gateway.v1.
+                   firewall_configuration.FirewallConfiguration`
+        """
+        return list(self._list(_firewall_configuration.FirewallConfiguration, 
+                               paginated=False, **params))
+
+    def get_firewall_configuration(self, firewall_configuration):
+        """Show firewall configuration.
+
+        :param size: The value can be the ID of a firewall configuration or a
+                     :class:`~openstack.micro_internet_gateway.v1.
+                     firewall_configuration.FirewallConfiguration`
+        :return: :class:`~openstack.micro_internet_gateway.v1.
+                     firewall_configuration.FirewallConfiguration`
+        """
+        return self._get(_firewall_configuration.FirewallConfiguration, 
+                         firewall_configuration)
 
     def regions(self, **params):
         """List regions
@@ -32,16 +60,6 @@ class Proxy(proxy.Proxy):
         """
         return list(self._list(_region.Region, paginated=False, **params))
 
-    def sizes(self, **params):
-        """List sizes
-
-        :param params: The parameters as query string format to get size.
-        :returns: A list of sizes.
-        :rtype: list of
-            :class:`~openstack.micro_internet_gateway.v1.size.Size`
-        """
-        return list(self._list(_size.Size, paginated=False, **params))
-
     def firewall_policy_types(self, **params):
         """List firewall policy types
 
@@ -52,8 +70,18 @@ class Proxy(proxy.Proxy):
         :rtype: list of
             :class:`~openstack.micro_internet_gateway.v1.size.Size`
         """
-        return list(self._list(_firewall_policy_types.FirewallPoicyTypes,
+        return list(self._list(_firewall_policy_type.FirewallPoicyTypes,
                     paginated=False, **params))
+
+    def sizes(self, **params):
+        """List sizes
+
+        :param params: The parameters as query string format to get size.
+        :returns: A list of sizes.
+        :rtype: list of
+            :class:`~openstack.micro_internet_gateway.v1.size.Size`
+        """
+        return list(self._list(_size.Size, paginated=False, **params))
 
     def get_size(self, size):
         """Show size.
