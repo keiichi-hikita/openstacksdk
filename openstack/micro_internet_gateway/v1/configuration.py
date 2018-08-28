@@ -21,6 +21,10 @@ from openstack.micro_internet_gateway import micro_internet_gateway_service
 from openstack import utils
 
 
+# TODO 最終的にこのファルは消す。
+# firewall_configurations, gslb_configurationsに移管かな？
+
+
 class Configuration(resource.Resource):
 
     # TODO Json-server適合させるために、一時的にコメントアウト
