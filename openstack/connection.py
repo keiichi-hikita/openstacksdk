@@ -284,6 +284,7 @@ class Connection(six.with_metaclass(_meta.ConnectionMeta,
                 self._extra_services[service.service_type] = service
 
         if not self.config:
+            # import pdb; pdb.set_trace()
             if profile:
                 import openstack.profile
                 # TODO(shade) Remove this once we've shifted

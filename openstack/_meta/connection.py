@@ -20,9 +20,10 @@ import os_service_types
 from openstack import _log
 from openstack import proxy
 from openstack import service_description
+from openstack import service_types
 
 _logger = _log.setup_logging('openstack')
-_service_type_manager = os_service_types.ServiceTypes()
+_service_type_manager = service_types.ServiceTypes()
 _DOC_TEMPLATE = (
     ":class:`{class_name}` for {service_type} aka {project}")
 _PROXY_TEMPLATE = """Proxy for {service_type} aka {project}
