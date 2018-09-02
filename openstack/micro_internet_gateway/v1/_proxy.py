@@ -24,6 +24,80 @@ from openstack.micro_internet_gateway.v1 import region as _region
 
 class Proxy(proxy.Proxy):
 
+    def create_firewall_configuration(self,
+                                      source_ip,
+                                      destination_ip,
+                                      ids_ips,
+                                      anti_virus,
+                                      anti_spyware,
+                                      enabled=False,
+                                      description="",
+                                      priority=0,
+                                      application_filter="",
+                                      log=False,
+                                      url_filtering="",
+                                      protocol_port="",
+                                      protocol_port_pattern=""):
+        """Create Firewall Configuration.
+
+        :param string source_ip: Source ip address for configuration.
+        :param string destination_ip: 
+            Destination ip address for configuration.
+        :param string ids_ips: IDS/IPS settings for configuration.
+        :param string anti_virus: Anti-Virus settings for configuration.
+        :param string anti_spyware: Anti-Spyware settings for configuration.
+        :param string enabled: Rule enable/disable settings for configuration.
+        :param string description: Description for configuration.
+        :param string priority: Priority for configuration.
+        :param string application_filter: Application filter for configuration.
+        :param string log: Log enable/disable settings for configuration.
+        :param string url_filtering: URL filtering settings for configuration.
+        :param string protocol_port: Allowed protocol/port for configuration.
+        :param string protocol_port_pattern: 
+            Settings if permit all traffic or use protocol/port pattern.
+        :returns: 
+            :class:`~openstack.micro_internet_gateway.v1.
+            firewall_configuration.FirewallConfiguration`
+        """
+        body = {}
+
+        # required params
+        body["source_ip"] = source_ip
+        body["destination_ip"] = destination_ip
+        body["ids_ips"] = ids_ips
+        body["anti_virus"] = anti_virus
+        body["anti_spyware"] = anti_spyware
+
+        body["description"] = description
+        body["priority"] = priority
+        body["application_filter"] = application_filter
+        body["log"] = log
+        body["url_filtering"] = url_filtering
+        body["enabled"] = enabled
+
+        if protocol_port_pattern == "any":
+            body["protocol_port"] = None
+        else:
+            body["protocol_port"] = protocol_port
+
+        return self._create(_firewall_configuration.FirewallConfiguration, 
+                            **body)
+
+    def delete_firewall_configuration(self, config_id, ignore_missing=False):
+        """Delete firewall configuration.
+
+        :param cell_id:
+            The ID of a firewall configuration.
+        :param bool ignore_missing: When set to ``False``
+            :class:`~ecl.exceptions.ResourceNotFound` will be
+            raised when the port does not exist.
+            When set to ``True``, no exception will be set when
+            attempting to delete a nonexistent port.
+        :returns: ``None``
+        """
+        self._delete(_firewall_configuration.FirewallConfiguration,
+                     config_id, ignore_missing=ignore_missing)
+
     def firewall_configurations(self, **params):
         """List firewall configurations
 
