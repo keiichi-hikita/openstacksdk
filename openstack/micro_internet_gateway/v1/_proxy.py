@@ -71,9 +71,9 @@ class Proxy(proxy.Proxy):
         body["description"] = description
         body["priority"] = priority
         body["application_filter"] = application_filter
-        body["log"] = log
+        body["log"] = log if log else False
         body["url_filtering"] = url_filtering
-        body["enabled"] = enabled
+        body["enabled"] = True if enabled else False
 
         if protocol_port_pattern == "any":
             body["protocol_port"] = None
