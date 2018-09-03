@@ -55,7 +55,7 @@ class Proxy(proxy.Proxy):
         :param string protocol_port: Allowed protocol/port for configuration.
         :param string protocol_port_pattern: 
             Settings if permit all traffic or use protocol/port pattern.
-        :returns: 
+        :returns:
             :class:`~openstack.micro_internet_gateway.v1.
             firewall_configuration.FirewallConfiguration`
         """
