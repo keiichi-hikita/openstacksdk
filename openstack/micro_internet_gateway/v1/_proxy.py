@@ -15,7 +15,7 @@ from openstack import proxy
 from openstack.micro_internet_gateway.v1 import cell as _cell
 from openstack.micro_internet_gateway.v1 import configuration as _config
 from openstack.micro_internet_gateway.v1 \
-    import firewall_policy_types as _firewall_policy_type
+    import firewall_policy_type as _firewall_policy_type
 from openstack.micro_internet_gateway.v1 \
     import firewall_configuration as _firewall_configuration
 from openstack.micro_internet_gateway.v1 import size as _size
