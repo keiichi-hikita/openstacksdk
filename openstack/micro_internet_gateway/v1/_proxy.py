@@ -69,7 +69,7 @@ class Proxy(proxy.Proxy):
         body["anti_spyware"] = anti_spyware
 
         body["description"] = description
-        body["priority"] = priority
+        body["priority"] = priority if int(priority) else 0
         body["application_filter"] = application_filter
         body["log"] = log if log else False
         body["url_filtering"] = url_filtering
